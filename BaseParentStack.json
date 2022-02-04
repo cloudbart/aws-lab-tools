@@ -170,11 +170,11 @@
             }
         },
         "Message": {
-            "Value": "Thanks for using the CBT Nuggets Lab Tools - Happy Learning! - http://cbtnuggets.com",
+            "Value": "Thanks for using the CloudBart Lab Tools - Happy Learning!",
             "Condition": "deployBillingAlertsTrue"
         },
         "MessageNoAlerts": {
-            "Value": "Thanks for using the CBT Nuggets Lab Tools - Happy Learning! - http://cbtnuggets.com - NOTE Estimated Charges billing alerts were NOT DEPLOYED - Consider setting up billing alerts manually.",
+            "Value": "Thanks for using the CloudBart Lab Tools - Happy Learning! - NOTE Estimated Charges billing alerts were NOT DEPLOYED - Consider setting up billing alerts manually.",
             "Condition": "deployBillingAlertsFalse"
         }
     }

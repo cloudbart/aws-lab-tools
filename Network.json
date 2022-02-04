@@ -6,7 +6,7 @@
 			"Type": "AWS::EC2::VPC",
 			"Properties": {
 				"CidrBlock": "10.0.0.0/16",
-				"Tags": [{ "Key": "Name", "Value": "NugVPC1" }]
+				"Tags": [{ "Key": "Name", "Value": "LabVPC1" }]
 			}
 		},
 		"PublicSubnet1": {
@@ -17,7 +17,7 @@
 				},
 				"CidrBlock": "10.0.10.0/24",
 				"MapPublicIpOnLaunch": true,
-				"Tags": [{ "Key": "Name", "Value": "NugPublicSubnet1" }]
+				"Tags": [{ "Key": "Name", "Value": "LabPublicSubnet1" }]
 			}
 		},
 		"PrivateSubnet1": {
@@ -27,13 +27,13 @@
 					"Ref": "VPC"
 				},
 				"CidrBlock": "10.0.20.0/24",
-				"Tags": [{ "Key": "Name", "Value": "NugPrivateSubnet1" }]
+				"Tags": [{ "Key": "Name", "Value": "LabPrivateSubnet1" }]
 			}
 		},
 		"InternetGateway": {
 			"Type": "AWS::EC2::InternetGateway",
 			"Properties": {
-				"Tags": [{ "Key": "Name", "Value": "NugIGW1" }]
+				"Tags": [{ "Key": "Name", "Value": "LabIGW1" }]
 			}
 		},
 		"AttachGateway": {
@@ -53,7 +53,7 @@
 				"VpcId": {
 					"Ref": "VPC"
 				},
-				"Tags": [{ "Key": "Name", "Value": "NugPublicRouteTable1" }]
+				"Tags": [{ "Key": "Name", "Value": "LabPublicRouteTable1" }]
 			}
 		},
 		"PublicRoute": {
