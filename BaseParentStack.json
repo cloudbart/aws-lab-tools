@@ -1,6 +1,6 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "Cloudbart AWS Labs Tools parent stack template. Contains all of the base lab component stacks",
+    "Description": "CloudBart AWS Lab Tools parent stack template. Contains all of the base lab component stacks",
     "Parameters": {
         "newUserNameParam": {
             "Type": "String",
