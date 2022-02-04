@@ -61,20 +61,20 @@
         "Network": {
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
-                "TemplateURL": "https://raw.githubusercontent.com/cloudbart/aws-lab-tools/main/Network.json"
+                "TemplateURL": "https://cloudbart-aws-lab-tools.s3.amazonaws.com/Network.json"
             }
         },
         "LimitedGroupPolicy": {
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
-                "TemplateURL": "https://raw.githubusercontent.com/cloudbart/aws-lab-tools/main/LimitedGroupPolicy.json"
+                "TemplateURL": "https://cloudbart-aws-lab-tools.s3.amazonaws.com/LimitedGroupPolicy.json"
             }
         },
         "LabUser": {
             "Type": "AWS::CloudFormation::Stack",
             "DependsOn": "LimitedGroupPolicy",
             "Properties": {
-                "TemplateURL": "https://raw.githubusercontent.com/cloudbart/aws-lab-tools/main/LabUser.json",
+                "TemplateURL": "https://cloudbart-aws-lab-tools.s3.amazonaws.com/LabUser.json",
                 "Parameters": {
                     "newUserNameParam": {
                         "Ref": "newUserNameParam"
@@ -85,7 +85,7 @@
         "Cloud9Environment": {
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
-                "TemplateURL": "https://raw.githubusercontent.com/cloudbart/aws-lab-tools/main/Cloud9.json",
+                "TemplateURL": "https://cloudbart-aws-lab-tools.s3.amazonaws.com/Cloud9.json",
                 "Parameters": {
                     "subnetIdParam": {
                         "Fn::Sub": [
@@ -120,7 +120,7 @@
             "Type": "AWS::CloudFormation::Stack",
             "Condition": "deployBillingAlertsTrue",
             "Properties": {
-                "TemplateURL": "https://raw.githubusercontent.com/cloudbart/aws-lab-tools/main/BillingAlerts.json",
+                "TemplateURL": "https://cloudbart-aws-lab-tools.s3.amazonaws.com/BillingAlerts.json",
                 "Parameters": {
                     "alertsEmailAddress": {
                         "Ref": "alertsEmailAddress"
