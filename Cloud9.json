@@ -14,9 +14,9 @@
 			"Type": "AWS::Cloud9::EnvironmentEC2",
 			"Properties": {
 				"AutomaticStopTimeMinutes": 30,
-				"Description": "NugLab Cloud9 Environment - cbtnuggets.com",
+				"Description": "Lab Cloud9 Environment",
 				"InstanceType": "t2.micro",
-				"Name": "NugLab Cloud9",
+				"Name": "Lab Cloud9",
 				"OwnerArn": {
 					"Fn::Sub": [
 						"${LabUserArn}",

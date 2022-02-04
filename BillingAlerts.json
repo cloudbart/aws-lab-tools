@@ -18,7 +18,7 @@
                     }
                 ],
                 "AlarmDescription": "Account Billing Alert for $5.00",
-                "AlarmName": "NugLab Billing Alert - Estimated Bill Exceeds $5",
+                "AlarmName": "Lab Billing Alert - Estimated Bill Exceeds $5",
                 "ComparisonOperator": "GreaterThanThreshold",
                 "Dimensions": [
                     {
@@ -43,7 +43,7 @@
                     }
                 ],
                 "AlarmDescription": "Account Billing Alert for $10.00",
-                "AlarmName": "NugLab Billing Alert - Estimated Bill Exceeds $10",
+                "AlarmName": "Lab Billing Alert - Estimated Bill Exceeds $10",
                 "ComparisonOperator": "GreaterThanThreshold",
                 "Dimensions": [
                     {
@@ -68,7 +68,7 @@
                     }
                 ],
                 "AlarmDescription": "Account Billing Alert for $20.00",
-                "AlarmName": "NugLab Billing Alert - Estimated Bill Exceeds $20",
+                "AlarmName": "Lab Billing Alert - Estimated Bill Exceeds $20",
                 "ComparisonOperator": "GreaterThanThreshold",
                 "Dimensions": [
                     {
@@ -93,7 +93,7 @@
                     }
                 ],
                 "AlarmDescription": "Account Billing Alert for $30.00",
-                "AlarmName": "NugLab Billing Alert - Estimated Bill Exceeds $30",
+                "AlarmName": "Lab Billing Alert - Estimated Bill Exceeds $30",
                 "ComparisonOperator": "GreaterThanThreshold",
                 "Dimensions": [
                     {
@@ -118,7 +118,7 @@
                     }
                 ],
                 "AlarmDescription": "Account Billing Alert for $40.00",
-                "AlarmName": "NugLab Billing Alert - Estimated Bill Exceeds $40",
+                "AlarmName": "Lab Billing Alert - Estimated Bill Exceeds $40",
                 "ComparisonOperator": "GreaterThanThreshold",
                 "Dimensions": [
                     {
@@ -143,7 +143,7 @@
                     }
                 ],
                 "AlarmDescription": "Account Billing Alert for $50.00",
-                "AlarmName": "NugLab Billing Alert - Estimated Bill Exceeds $50",
+                "AlarmName": "Lab Billing Alert - Estimated Bill Exceeds $50",
                 "ComparisonOperator": "GreaterThanThreshold",
                 "Dimensions": [
                     {
@@ -168,7 +168,7 @@
                     }
                 ],
                 "AlarmDescription": "Account Billing Alert for $100.00",
-                "AlarmName": "NugLab Billing Alert - Estimated Bill Exceeds $100",
+                "AlarmName": "Lab Billing Alert - Estimated Bill Exceeds $100",
                 "ComparisonOperator": "GreaterThanThreshold",
                 "Dimensions": [
                     {
@@ -193,7 +193,7 @@
                     }
                 ],
                 "AlarmDescription": "Account Billing Alert for $150.00",
-                "AlarmName": "NugLab Billing Alert - Estimated Bill Exceeds $150",
+                "AlarmName": "Lab Billing Alert - Estimated Bill Exceeds $150",
                 "ComparisonOperator": "GreaterThanThreshold",
                 "Dimensions": [
                     {
@@ -218,7 +218,7 @@
                     }
                 ],
                 "AlarmDescription": "Account Billing Alert for $200.00",
-                "AlarmName": "NugLab Billing Alert - Estimated Bill Exceeds $200",
+                "AlarmName": "Lab Billing Alert - Estimated Bill Exceeds $200",
                 "ComparisonOperator": "GreaterThanThreshold",
                 "Dimensions": [
                     {
@@ -237,7 +237,7 @@
         "BillingAlertTopic": {
             "Type": "AWS::SNS::Topic",
             "Properties": {
-                "TopicName": "NugLab-Billing-Alerts",
+                "TopicName": "Lab-Billing-Alerts",
                 "Subscription": [
                     {
                         "Endpoint": {
