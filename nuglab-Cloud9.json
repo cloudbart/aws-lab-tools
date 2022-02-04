@@ -1,0 +1,50 @@
+{
+	"AWSTemplateFormatVersion": "2010-09-09",
+	"Description": "Creates Cloud9 Environment owned by new lab user",
+	"Parameters": {
+		"subnetIdParam": {
+			"Type": "String"
+		},
+		"labUserArnParam": {
+			"Type": "String"
+		}
+	},
+	"Resources": {
+		"Cloud9Environment": {
+			"Type": "AWS::Cloud9::EnvironmentEC2",
+			"Properties": {
+				"AutomaticStopTimeMinutes": 30,
+				"Description": "NugLab Cloud9 Environment - cbtnuggets.com",
+				"InstanceType": "t2.micro",
+				"Name": "NugLab Cloud9",
+				"OwnerArn": {
+					"Fn::Sub": [
+						"${LabUserArn}",
+						{
+							"LabUserArn": {
+								"Ref": "labUserArnParam"
+							}
+						}
+					]
+				},
+				"SubnetId": {
+					"Fn::Sub": [
+						"${PublicSubnetId}",
+						{
+							"PublicSubnetId": {
+								"Ref": "subnetIdParam"
+							}
+						}
+					]
+				}
+			}
+		}
+	},
+	"Outputs":{
+		"Cloud9EnvironmentID": {
+            "Value": {
+                "Ref": "Cloud9Environment"
+            }
+        }
+	}
+}

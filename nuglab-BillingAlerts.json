@@ -1,0 +1,252 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Creates Billing Alerts, and SNS Topic for message relay",
+    "Parameters": {
+        "alertsEmailAddress": {
+            "Type": "String",
+            "Description": "Enter email address for billing alerts",
+            "AllowedPattern": "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
+        }
+    },
+    "Resources": {
+        "BillingAlertFiveDollars": {
+            "Type": "AWS::CloudWatch::Alarm",
+            "Properties": {
+                "AlarmActions": [
+                    {
+                        "Ref": "BillingAlertTopic"
+                    }
+                ],
+                "AlarmDescription": "Account Billing Alert for $5.00",
+                "AlarmName": "NugLab Billing Alert - Estimated Bill Exceeds $5",
+                "ComparisonOperator": "GreaterThanThreshold",
+                "Dimensions": [
+                    {
+                        "Name": "Currency",
+                        "Value": "USD"
+                    }
+                ],
+                "EvaluationPeriods": 1,
+                "MetricName": "EstimatedCharges",
+                "Namespace": "AWS/Billing",
+                "Period": 21600,
+                "Statistic": "Maximum",
+                "Threshold": 5
+            }
+        },
+        "BillingAlertTenDollars": {
+            "Type": "AWS::CloudWatch::Alarm",
+            "Properties": {
+                "AlarmActions": [
+                    {
+                        "Ref": "BillingAlertTopic"
+                    }
+                ],
+                "AlarmDescription": "Account Billing Alert for $10.00",
+                "AlarmName": "NugLab Billing Alert - Estimated Bill Exceeds $10",
+                "ComparisonOperator": "GreaterThanThreshold",
+                "Dimensions": [
+                    {
+                        "Name": "Currency",
+                        "Value": "USD"
+                    }
+                ],
+                "EvaluationPeriods": 1,
+                "MetricName": "EstimatedCharges",
+                "Namespace": "AWS/Billing",
+                "Period": 21600,
+                "Statistic": "Maximum",
+                "Threshold": 10
+            }
+        },
+        "BillingAlertTwentyDollars": {
+            "Type": "AWS::CloudWatch::Alarm",
+            "Properties": {
+                "AlarmActions": [
+                    {
+                        "Ref": "BillingAlertTopic"
+                    }
+                ],
+                "AlarmDescription": "Account Billing Alert for $20.00",
+                "AlarmName": "NugLab Billing Alert - Estimated Bill Exceeds $20",
+                "ComparisonOperator": "GreaterThanThreshold",
+                "Dimensions": [
+                    {
+                        "Name": "Currency",
+                        "Value": "USD"
+                    }
+                ],
+                "EvaluationPeriods": 1,
+                "MetricName": "EstimatedCharges",
+                "Namespace": "AWS/Billing",
+                "Period": 21600,
+                "Statistic": "Maximum",
+                "Threshold": 20
+            }
+        },
+        "BillingAlertThirtyDollars": {
+            "Type": "AWS::CloudWatch::Alarm",
+            "Properties": {
+                "AlarmActions": [
+                    {
+                        "Ref": "BillingAlertTopic"
+                    }
+                ],
+                "AlarmDescription": "Account Billing Alert for $30.00",
+                "AlarmName": "NugLab Billing Alert - Estimated Bill Exceeds $30",
+                "ComparisonOperator": "GreaterThanThreshold",
+                "Dimensions": [
+                    {
+                        "Name": "Currency",
+                        "Value": "USD"
+                    }
+                ],
+                "EvaluationPeriods": 1,
+                "MetricName": "EstimatedCharges",
+                "Namespace": "AWS/Billing",
+                "Period": 21600,
+                "Statistic": "Maximum",
+                "Threshold": 30
+            }
+        },
+        "BillingAlertFourtyDollars": {
+            "Type": "AWS::CloudWatch::Alarm",
+            "Properties": {
+                "AlarmActions": [
+                    {
+                        "Ref": "BillingAlertTopic"
+                    }
+                ],
+                "AlarmDescription": "Account Billing Alert for $40.00",
+                "AlarmName": "NugLab Billing Alert - Estimated Bill Exceeds $40",
+                "ComparisonOperator": "GreaterThanThreshold",
+                "Dimensions": [
+                    {
+                        "Name": "Currency",
+                        "Value": "USD"
+                    }
+                ],
+                "EvaluationPeriods": 1,
+                "MetricName": "EstimatedCharges",
+                "Namespace": "AWS/Billing",
+                "Period": 21600,
+                "Statistic": "Maximum",
+                "Threshold": 40
+            }
+        },
+        "BillingAlertFiftyDollars": {
+            "Type": "AWS::CloudWatch::Alarm",
+            "Properties": {
+                "AlarmActions": [
+                    {
+                        "Ref": "BillingAlertTopic"
+                    }
+                ],
+                "AlarmDescription": "Account Billing Alert for $50.00",
+                "AlarmName": "NugLab Billing Alert - Estimated Bill Exceeds $50",
+                "ComparisonOperator": "GreaterThanThreshold",
+                "Dimensions": [
+                    {
+                        "Name": "Currency",
+                        "Value": "USD"
+                    }
+                ],
+                "EvaluationPeriods": 1,
+                "MetricName": "EstimatedCharges",
+                "Namespace": "AWS/Billing",
+                "Period": 21600,
+                "Statistic": "Maximum",
+                "Threshold": 50
+            }
+        },
+        "BillingAlertOneHundredDollars": {
+            "Type": "AWS::CloudWatch::Alarm",
+            "Properties": {
+                "AlarmActions": [
+                    {
+                        "Ref": "BillingAlertTopic"
+                    }
+                ],
+                "AlarmDescription": "Account Billing Alert for $100.00",
+                "AlarmName": "NugLab Billing Alert - Estimated Bill Exceeds $100",
+                "ComparisonOperator": "GreaterThanThreshold",
+                "Dimensions": [
+                    {
+                        "Name": "Currency",
+                        "Value": "USD"
+                    }
+                ],
+                "EvaluationPeriods": 1,
+                "MetricName": "EstimatedCharges",
+                "Namespace": "AWS/Billing",
+                "Period": 21600,
+                "Statistic": "Maximum",
+                "Threshold": 100
+            }
+        },
+        "BillingAlertOneHundredFiftyDollars": {
+            "Type": "AWS::CloudWatch::Alarm",
+            "Properties": {
+                "AlarmActions": [
+                    {
+                        "Ref": "BillingAlertTopic"
+                    }
+                ],
+                "AlarmDescription": "Account Billing Alert for $150.00",
+                "AlarmName": "NugLab Billing Alert - Estimated Bill Exceeds $150",
+                "ComparisonOperator": "GreaterThanThreshold",
+                "Dimensions": [
+                    {
+                        "Name": "Currency",
+                        "Value": "USD"
+                    }
+                ],
+                "EvaluationPeriods": 1,
+                "MetricName": "EstimatedCharges",
+                "Namespace": "AWS/Billing",
+                "Period": 21600,
+                "Statistic": "Maximum",
+                "Threshold": 150
+            }
+        },
+        "BillingAlertTwoHundredDollars": {
+            "Type": "AWS::CloudWatch::Alarm",
+            "Properties": {
+                "AlarmActions": [
+                    {
+                        "Ref": "BillingAlertTopic"
+                    }
+                ],
+                "AlarmDescription": "Account Billing Alert for $200.00",
+                "AlarmName": "NugLab Billing Alert - Estimated Bill Exceeds $200",
+                "ComparisonOperator": "GreaterThanThreshold",
+                "Dimensions": [
+                    {
+                        "Name": "Currency",
+                        "Value": "USD"
+                    }
+                ],
+                "EvaluationPeriods": 1,
+                "MetricName": "EstimatedCharges",
+                "Namespace": "AWS/Billing",
+                "Period": 21600,
+                "Statistic": "Maximum",
+                "Threshold": 200
+            }
+        },
+        "BillingAlertTopic": {
+            "Type": "AWS::SNS::Topic",
+            "Properties": {
+                "TopicName": "NugLab-Billing-Alerts",
+                "Subscription": [
+                    {
+                        "Endpoint": {
+                            "Ref": "alertsEmailAddress"
+                        },
+                        "Protocol": "email"
+                    }
+                ]
+            }
+        }
+    }
+}

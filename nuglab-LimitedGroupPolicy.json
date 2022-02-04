@@ -1,0 +1,121 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Creates NugLabLimitedGroup and relevant IAM policies",
+    "Resources": {
+        "nuglabgroupmanagedpolicy": {
+            "Type": "AWS::IAM::ManagedPolicy",
+            "Properties": {
+                "Description": "Policy works in conjunciton with AWS-managed \"SystemsAdministrator\" policy.",
+                "ManagedPolicyName": "NugLabLimitedPolicy",
+                "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [{
+                            "Sid": "AllowAdditionalServices",
+                            "Effect": "Allow",
+                            "Action": [
+                                "account:*",
+                                "aws-portal:*",
+                                "cloud9:*",
+                                "cur:*",
+                                "ce:*",
+                                "iam:*",
+                                "pricing:*",
+                                "rds:*"
+                            ],
+                            "Resource": "*"
+                        },
+                        {
+                            "Sid": "RestrictToCurrentRegion",
+                            "Effect": "Deny",
+                            "Action": "*",
+                            "Resource": "*",
+                            "Condition": {
+                                "StringNotEquals": {
+                                    "aws:RequestedRegion": {
+                                        "Ref": "AWS::Region"
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "Sid": "RestrictEC2InstanceTypes",
+                            "Effect": "Deny",
+                            "Action": "ec2:RunInstances",
+                            "Resource": "*",
+                            "Condition": {
+                                "ForAnyValue:StringNotLike": {
+                                    "ec2:InstanceType": [
+                                        "t2.nano",
+                                        "t2.micro",
+                                        "t3.nano",
+                                        "t3.micro"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "Sid": "RestrictEBSVolumeTypes",
+                            "Effect": "Deny",
+                            "Action": [
+                                "ec2:AttachVolume",
+                                "ec2:CreateVolume",
+                                "ec2:RunInstances"
+                            ],
+                            "Resource": "*",
+                            "Condition": {
+                                "ForAnyValue:StringNotLike": {
+                                    "ec2:VolumeType": [
+                                        "gp2",
+                                        "standard"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "Sid": "RestrictEBSVolumeSize",
+                            "Effect": "Deny",
+                            "Action": [
+                                "ec2:AttachVolume",
+                                "ec2:CreateVolume",
+                                "ec2:RunInstances"
+                            ],
+                            "Resource": "*",
+                            "Condition": {
+                                "NumericGreaterThan": {
+                                    "ec2:VolumeSize": "15"
+                                }
+                            }
+                        },
+                        {
+                            "Sid": "RestrictRDSInstanceTypes",
+                            "Effect": "Deny",
+                            "Action": [
+                                "rds:CreatetDBInstance",
+                                "rds:CreateDBCluster"
+                            ],
+                            "Resource": "arn:aws:rds:*:*:db:*",
+                            "Condition": {
+                                "ForAnyValue:StringNotLike": {
+                                    "rds:DatabaseClass": [
+                                        "db.t2.micro"
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        "nuglabgroup": {
+            "Type": "AWS::IAM::Group",
+            "Properties": {
+                "GroupName": "NugLabLimitedGroup",
+                "ManagedPolicyArns": [{
+                        "Ref": "nuglabgroupmanagedpolicy"
+                    },
+                    "arn:aws:iam::aws:policy/job-function/SystemAdministrator"
+                ]
+            }
+        }
+    }
+}

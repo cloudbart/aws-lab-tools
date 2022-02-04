@@ -1,0 +1,181 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Cloudbart AWS Labs Tools parent stack template. Contains all of the base lab component stacks",
+    "Parameters": {
+        "newUserNameParam": {
+            "Type": "String",
+            "Default": "newLabUserName",
+            "Description": "Provide a username for the new user."
+        },
+        "deployAlertsBoolean": {
+            "AllowedValues": ["true", "false"],
+            "Type": "String",
+            "Default": "true",
+            "Description": "Email alerts will be deployed by default."
+        },
+        "alertsEmailAddress": {
+            "Type": "String",
+            "Description": "Provide email address to recieve billing alerts. (Leave blank if not deploying alerts)",
+            "Default" : "",
+            "AllowedPattern": "^$|^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
+        }
+    },
+    "Conditions": {
+        "deployBillingAlertsTrue": {
+            "Fn::Equals": [{ "Ref": "deployAlertsBoolean" }, "true"]
+        },
+        "deployBillingAlertsFalse": {
+            "Fn::Equals": [{ "Ref": "deployAlertsBoolean" }, "false"]
+        }
+    },
+    "Metadata": {
+        "AWS::CloudFormation::Interface": {
+            "ParameterGroups": [
+                {
+                    "Label": {
+                        "default": "Limited Permissions Lab User"
+                    },
+                    "Parameters" : [ "newUserNameParam" ]
+                },
+                {
+                    "Label": {
+                        "default": "Estimated Monthly Charges Billing Alerts"
+                    },
+                    "Parameters" : [ "deployAlertsBoolean", "alertsEmailAddress"]
+                }
+            ],
+            "ParameterLabels": {
+                "newUserNameParam": {
+                    "default": "Username for the new lab user?"
+                },
+                "deployAlertsBoolean": {
+                    "default": "Deploy billing alerts?"
+                },
+                "alertsEmailAddress": {
+                    "default": "Where to send the alerts?"
+                }
+            }
+        }
+    },
+    "Resources": {
+        "Network": {
+            "Type": "AWS::CloudFormation::Stack",
+            "Properties": {
+                "TemplateURL": "https://cbtnuggets-labs-aws.s3.amazonaws.com/aws-labs-tools/nuglab-Network.json"
+            }
+        },
+        "LimitedGroupPolicy": {
+            "Type": "AWS::CloudFormation::Stack",
+            "Properties": {
+                "TemplateURL": "https://cbtnuggets-labs-aws.s3.amazonaws.com/aws-labs-tools/nuglab-LimitedGroupPolicy.json"
+            }
+        },
+        "LabUser": {
+            "Type": "AWS::CloudFormation::Stack",
+            "DependsOn": "LimitedGroupPolicy",
+            "Properties": {
+                "TemplateURL": "https://cbtnuggets-labs-aws.s3.amazonaws.com/aws-labs-tools/nuglab-LabUser.json",
+                "Parameters": {
+                    "newUserNameParam": {
+                        "Ref": "newUserNameParam"
+                    }
+                }
+            }
+        },
+        "Cloud9Environment": {
+            "Type": "AWS::CloudFormation::Stack",
+            "Properties": {
+                "TemplateURL": "https://cbtnuggets-labs-aws.s3.amazonaws.com/aws-labs-tools/nuglab-Cloud9.json",
+                "Parameters": {
+                    "subnetIdParam": {
+                        "Fn::Sub": [
+                            "${PublicSubnetId}",
+                            {
+                                "PublicSubnetId": {
+                                    "Fn::GetAtt": [
+                                        "Network",
+                                        "Outputs.PublicSubnetId"
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    "labUserArnParam": {
+                        "Fn::Sub": [
+                            "${LabUserArn}",
+                            {
+                                "LabUserArn": {
+                                    "Fn::GetAtt": [
+                                        "LabUser",
+                                        "Outputs.LabUserArn"
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        "BillingAlerts": {
+            "Type": "AWS::CloudFormation::Stack",
+            "Condition": "deployBillingAlertsTrue",
+            "Properties": {
+                "TemplateURL": "https://cbtnuggets-labs-aws.s3.amazonaws.com/aws-labs-tools/nuglab-BillingAlerts.json",
+                "Parameters": {
+                    "alertsEmailAddress": {
+                        "Ref": "alertsEmailAddress"
+                    }
+                }
+            }
+        }
+    },
+    "Outputs": {
+        "NewLabUser": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "LabUser",
+                    "Outputs.NewLabUserName"
+                ]
+            }
+        },
+        "AccessKeyforNewLabUser": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "LabUser",
+                    "Outputs.AccessKeyforNewLabUser"
+                ]
+            }
+        },
+        "SecretKeyforNewLabUser": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "LabUser",
+                    "Outputs.SecretKeyforNewLabUser"
+                ]
+            }
+        },
+        "Cloud9EnvironmentURL": {
+            "Value": {
+                "Fn::Join": [
+                    "", [
+                        "http://console.aws.amazon.com/cloud9/ide/",
+                        {
+                            "Fn::GetAtt": [
+                                "Cloud9Environment",
+                                "Outputs.Cloud9EnvironmentID"
+                            ]
+                        }
+                    ]
+                ]
+            }
+        },
+        "Message": {
+            "Value": "Thanks for using the CBT Nuggets Lab Tools - Happy Learning! - http://cbtnuggets.com",
+            "Condition": "deployBillingAlertsTrue"
+        },
+        "MessageNoAlerts": {
+            "Value": "Thanks for using the CBT Nuggets Lab Tools - Happy Learning! - http://cbtnuggets.com - NOTE Estimated Charges billing alerts were NOT DEPLOYED - Consider setting up billing alerts manually.",
+            "Condition": "deployBillingAlertsFalse"
+        }
+    }
+}

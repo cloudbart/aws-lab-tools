@@ -1,0 +1,91 @@
+{
+	"AWSTemplateFormatVersion": "2010-09-09",
+	"Description": "Builds the VPC, with IGW, Route Table & Routes, and one public, and one private subnet.",
+	"Resources": {
+		"VPC": {
+			"Type": "AWS::EC2::VPC",
+			"Properties": {
+				"CidrBlock": "10.0.0.0/16",
+				"Tags": [{ "Key": "Name", "Value": "NugVPC1" }]
+			}
+		},
+		"PublicSubnet1": {
+			"Type": "AWS::EC2::Subnet",
+			"Properties": {
+				"VpcId": {
+					"Ref": "VPC"
+				},
+				"CidrBlock": "10.0.10.0/24",
+				"MapPublicIpOnLaunch": true,
+				"Tags": [{ "Key": "Name", "Value": "NugPublicSubnet1" }]
+			}
+		},
+		"PrivateSubnet1": {
+			"Type": "AWS::EC2::Subnet",
+			"Properties": {
+				"VpcId": {
+					"Ref": "VPC"
+				},
+				"CidrBlock": "10.0.20.0/24",
+				"Tags": [{ "Key": "Name", "Value": "NugPrivateSubnet1" }]
+			}
+		},
+		"InternetGateway": {
+			"Type": "AWS::EC2::InternetGateway",
+			"Properties": {
+				"Tags": [{ "Key": "Name", "Value": "NugIGW1" }]
+			}
+		},
+		"AttachGateway": {
+			"Type": "AWS::EC2::VPCGatewayAttachment",
+			"Properties": {
+				"VpcId": {
+					"Ref": "VPC"
+				},
+				"InternetGatewayId": {
+					"Ref": "InternetGateway"
+				}
+			}
+		},
+		"PublicRouteTable": {
+			"Type": "AWS::EC2::RouteTable",
+			"Properties": {
+				"VpcId": {
+					"Ref": "VPC"
+				},
+				"Tags": [{ "Key": "Name", "Value": "NugPublicRouteTable1" }]
+			}
+		},
+		"PublicRoute": {
+			"Type": "AWS::EC2::Route",
+			"DependsOn": "AttachGateway",
+			"Properties": {
+				"RouteTableId": {
+					"Ref": "PublicRouteTable"
+				},
+				"DestinationCidrBlock": "0.0.0.0/0",
+				"GatewayId": {
+					"Ref": "InternetGateway"
+				}
+			}
+		},
+		"PublicSubnet1RouteTableAssociation": {
+			"Type": "AWS::EC2::SubnetRouteTableAssociation",
+			"Properties": {
+				"SubnetId": {
+					"Ref": "PublicSubnet1"
+				},
+				"RouteTableId": {
+					"Ref": "PublicRouteTable"
+				}
+			}
+		}
+	},
+	"Outputs": {
+		"PublicSubnetId": {
+			"Value": {
+				"Ref": "PublicSubnet1"
+			}
+		}
+	}
+}

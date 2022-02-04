@@ -1,0 +1,64 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Creates NugLab Lab User account. Prompts for username input, generates random password, provides credentials back as output",
+    "Parameters": {
+        "newUserNameParam": {
+            "Type": "String",
+            "Default": "newLabUserName",
+            "Description": "Please provide a username for the new lab user."
+        }
+    },
+    "Resources": {
+        "newLabUser": {
+            "Type": "AWS::IAM::User",
+            "Properties": {
+                "UserName": {
+                    "Ref": "newUserNameParam"
+                },
+                "Groups": [
+                    "NugLabLimitedGroup"
+                ],
+                "LoginProfile": {
+                    "Password": "cbtnuggets1",
+                    "PasswordResetRequired": true
+                }
+            }
+        },
+        "newLabUserAccessKeys": {
+            "Type": "AWS::IAM::AccessKey",
+            "Properties": {
+                "UserName": {
+                    "Ref": "newLabUser"
+                }
+            }
+        }
+    },
+    "Outputs": {
+        "NewLabUserName": {
+            "Value": {
+                "Ref": "newLabUser"
+            }
+        },
+        "AccessKeyforNewLabUser": {
+            "Value": {
+                "Ref": "newLabUserAccessKeys"
+            }
+        },
+        "SecretKeyforNewLabUser": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "newLabUserAccessKeys",
+                    "SecretAccessKey"
+                ]
+            }
+        },
+        "LabUserArn" : {
+            "Value": {
+                "Fn::GetAtt": [
+                    "newLabUser",
+                    "Arn"
+                ]
+            }
+        }
+    }
+}
