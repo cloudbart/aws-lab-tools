@@ -1,6 +1,6 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "Creates NugLab Lab User account. Prompts for username input, generates random password, provides credentials back as output",
+    "Description": "Creates Lab User account. Prompts for username input, generates random password, provides credentials back as output",
     "Parameters": {
         "newUserNameParam": {
             "Type": "String",
@@ -16,10 +16,10 @@
                     "Ref": "newUserNameParam"
                 },
                 "Groups": [
-                    "NugLabLimitedGroup"
+                    "LabLimitedGroup"
                 ],
                 "LoginProfile": {
-                    "Password": "cbtnuggets1",
+                    "Password": "LabPass1",
                     "PasswordResetRequired": true
                 }
             }

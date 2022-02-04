@@ -1,12 +1,12 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "Creates NugLabLimitedGroup and relevant IAM policies",
+    "Description": "Creates LabLimitedGroup and relevant IAM policies",
     "Resources": {
-        "nuglabgroupmanagedpolicy": {
+        "labgroupmanagedpolicy": {
             "Type": "AWS::IAM::ManagedPolicy",
             "Properties": {
                 "Description": "Policy works in conjunciton with AWS-managed \"SystemsAdministrator\" policy.",
-                "ManagedPolicyName": "NugLabLimitedPolicy",
+                "ManagedPolicyName": "LabLimitedPolicy",
                 "PolicyDocument": {
                     "Version": "2012-10-17",
                     "Statement": [{
@@ -106,12 +106,12 @@
                 }
             }
         },
-        "nuglabgroup": {
+        "labgroup": {
             "Type": "AWS::IAM::Group",
             "Properties": {
-                "GroupName": "NugLabLimitedGroup",
+                "GroupName": "LabLimitedGroup",
                 "ManagedPolicyArns": [{
-                        "Ref": "nuglabgroupmanagedpolicy"
+                        "Ref": "labgroupmanagedpolicy"
                     },
                     "arn:aws:iam::aws:policy/job-function/SystemAdministrator"
                 ]
